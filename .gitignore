@@ -414,3 +414,8 @@ iOSInjectionProject/
 
 # End of https://www.gitignore.io/api/c++,cmake,clion,objective-c
 
+/.idea/.gitignore
+/.idea/izolacja.iml
+/.idea/vcs.xml
+/.idea/modules.xml
+/.idea/misc.xml
