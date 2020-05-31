@@ -117,7 +117,6 @@ void Map::setUpGraphPosition() {
             }
         }
     }
-//    printGraphPosition();
 }
 
 void Map::setDistanceIfConnection(int x1, int y1, int x2, int y2, char connection_mode, int s) {
@@ -129,17 +128,10 @@ void Map::setDistanceIfConnection(int x1, int y1, int x2, int y2, char connectio
 }
 
 bool Map::isConnection(int x1, int y1, int x2, int y2, char connection_mode) {
-    if (isRoad(x1, y1) && isRoad(x2, y2)) {
-        if (isCross(x1, y1) && (isCross(x2, y2) || get(x2, y2) == connection_mode)) {
-            return true;
-        }
-
-        if (get(x1, y1) == connection_mode && (isCross(x2, y2) || get(x2, y2) == connection_mode)) {
-            return true;
-        }
-    }
-
-    return false;
+    return isRoad(x1, y1) && isRoad(x2, y2) && (
+                isCross(x1, y1) && (isCross(x2, y2) || get(x2, y2) == connection_mode)
+                || get(x1, y1) == connection_mode && (isCross(x2, y2) || get(x2, y2) == connection_mode)
+            );
 }
 
 void Map::floydWarshall() {
@@ -158,13 +150,11 @@ void Map::floydWarshall() {
                     setGraph(i, j, w);
                 }
             }
-
-//    printGraph();
 }
 
 
 void Map::zerosIfDistanceTooShort() {
-    for (int i = 0; i < numberRoad; i++)
+    for (int i = 0; i < numberRoad; i++) {
         for (int j = 0; j < numberRoad; j++) {
             if (getGraph(j, i) == -1) {
                 continue;
@@ -175,8 +165,7 @@ void Map::zerosIfDistanceTooShort() {
                 setGraph(i, j, -2);
             }
         }
-
-//    printGraph();
+    }
 }
 
 bool Map::bronKerbosch(const vector<int> &SR, vector<int> SP, vector<int> SX) {
