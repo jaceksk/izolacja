@@ -9,19 +9,19 @@ Map::Map(const string &fileName) {
 }
 
 char Map::get(int x, int y) {
-    return this->map[x * this->W + y];
+    return map[x * W + y];
 }
 
 void Map::set(int x, int y, char val) {
-    this->map[x * this->W + y] = val;
+    map[x * W + y] = val;
 }
 
 int Map::getGraph(int x, int y) {
-    return this->graphInt[y * this->numberRoad + x];
+    return graphInt[y * numberRoad + x];
 }
 
 void Map::setGraph(int x, int y, int val) {
-    this->graphInt[y * this->numberRoad + x] = val;
+    graphInt[y * numberRoad + x] = val;
 }
 
 bool Map::isRoad(int x, int y) {
@@ -33,7 +33,7 @@ bool Map::isCross(int x, int y) {
 }
 
 int Map::getGraphPosition(int h, int w) {
-    for (int i = 0; i < this->numberRoad; i++) {
+    for (int i = 0; i < numberRoad; i++) {
         if (graph[i].h == h && graph[i].w == w) {
             return i;
         }
@@ -49,11 +49,11 @@ void Map::readFile(const std::string &fileName) {
         exit(EXIT_FAILURE);
     }
 
-    infile >> this->W >> this->H >> this->L >> this->K;
+    infile >> W >> H >> L >> K;
     infile >> parkName;
 
     std::string line;
-    this->map = new char[this->W * this->H];
+    map = new char[W * H];
 
     int a = 0;
     while (getline(infile, line)) {
@@ -70,8 +70,8 @@ void Map::convertToGraph() {
     int s = 0;
 
 //    calculate number of road
-    for (int i = 0; i < this->H; i++) {
-        for (int j = 0; j < this->W; j++) {
+    for (int i = 0; i < H; i++) {
+        for (int j = 0; j < W; j++) {
             if (isRoad(i, j)) {
                 s++;
             }
@@ -80,8 +80,8 @@ void Map::convertToGraph() {
 
     numberRoad = s;
 
-    this->graphInt = new int[numberRoad * numberRoad];
-    this->graph = new Position[numberRoad];
+    graphInt = new int[numberRoad * numberRoad];
+    graph = new Position[numberRoad];
 
     for (int i = 0; i < numberRoad * numberRoad; i++) {
         graphInt[i] = -1;
@@ -108,11 +108,11 @@ void Map::convertToGraph() {
 
 void Map::setUpGraphPosition() {
     int s = 0;
-    for (int i = 0; i < this->H; i++) {
-        for (int j = 0; j < this->W; j++) {
+    for (int i = 0; i < H; i++) {
+        for (int j = 0; j < W; j++) {
             if (isRoad(i, j)) {
-                this->graph[s].h = i;
-                this->graph[s].w = j;
+                graph[s].h = i;
+                graph[s].w = j;
                 s++;
             }
         }
@@ -246,8 +246,8 @@ bool Map::bronKerbosch(const vector<int> &SR, vector<int> SP, vector<int> SX) {
 
 void Map::printGraph() {
     printf("Graph \n");
-    for (int i = 0; i < this->numberRoad; i++) {
-        for (int j = 0; j < this->numberRoad; j++) {
+    for (int i = 0; i < numberRoad; i++) {
+        for (int j = 0; j < numberRoad; j++) {
             printf("%d ", getGraph(i, j));
         }
         printf("\n");
@@ -255,21 +255,21 @@ void Map::printGraph() {
 }
 
 void Map::printGraphPosition() {
-    printf("Graph Position %d \n", this->numberRoad);
-    for (int i = 0; i < this->numberRoad; i++) {
-        printf("%d: %d %d \n", i, this->graph[i].h, this->graph[i].w);
+    printf("Graph Position %d \n", numberRoad);
+    for (int i = 0; i < numberRoad; i++) {
+        printf("%d: %d %d \n", i, graph[i].h, graph[i].w);
     }
 }
 
 void Map::printLabirynt() {
-    printf("Height: %d \n", this->H);
-    printf("Width: %d \n", this->W);
-    printf("Odstep: %d \n", this->L);
-    printf("People: %d \n", this->K);
+    printf("Height: %d \n", H);
+    printf("Width: %d \n", W);
+    printf("Odstep: %d \n", L);
+    printf("People: %d \n", K);
 
-    for (int i = 0; i < this->H; i++) {
+    for (int i = 0; i < H; i++) {
         printf("%d: ", i);
-        for (int j = 0; j < this->W; j++) {
+        for (int j = 0; j < W; j++) {
             printf("%c", get(i, j));
         }
         printf("\n");
