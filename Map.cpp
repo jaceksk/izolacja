@@ -129,27 +129,29 @@ void Map::setDistanceIfConnection(int x1, int y1, int x2, int y2, char connectio
 
 bool Map::isConnection(int x1, int y1, int x2, int y2, char connection_mode) {
     return isRoad(x1, y1) && isRoad(x2, y2) && (
-                isCross(x1, y1) && (isCross(x2, y2) || get(x2, y2) == connection_mode)
-                || get(x1, y1) == connection_mode && (isCross(x2, y2) || get(x2, y2) == connection_mode)
-            );
+            isCross(x1, y1) && (isCross(x2, y2) || get(x2, y2) == connection_mode)
+            || get(x1, y1) == connection_mode && (isCross(x2, y2) || get(x2, y2) == connection_mode)
+    );
 }
 
 void Map::floydWarshall() {
-    int k, i, j, w;
+    int k, i, j, weight;
 
-    for (k = 0; k < numberRoad; k++)
-        for (i = 0; i < numberRoad; i++)
+    for (k = 0; k < numberRoad; k++) {
+        for (i = 0; i < numberRoad; i++) {
             for (j = 0; j < numberRoad; j++) {
                 if (getGraph(i, k) == -1 || getGraph(k, j) == -1) {
                     continue;
                 }
 
-                w = getGraph(i, k) + getGraph(k, j);
+                weight = getGraph(i, k) + getGraph(k, j);
 
-                if (getGraph(i, j) > w || getGraph(i, j) == -1) {
-                    setGraph(i, j, w);
+                if (getGraph(i, j) > weight || getGraph(i, j) == -1) {
+                    setGraph(i, j, weight);
                 }
             }
+        }
+    }
 }
 
 
