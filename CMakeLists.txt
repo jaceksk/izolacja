@@ -4,4 +4,4 @@ project(izolacja)
 set(CMAKE_CXX_STANDARD 11)
 
 add_executable(izolacja main.cpp Map.cpp Map.h)
-add_executable(izolacjaOneFile Map.cpp Map.h izolacja.cpp)
+add_executable(izolacjaOneFile izolacja.cpp)
